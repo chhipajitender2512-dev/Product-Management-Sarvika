@@ -1,5 +1,6 @@
 package com.sarvika.productmanagement.controller;
 
+import com.sarvika.productmanagement.domain.reponse.LoginResponse;
 import com.sarvika.productmanagement.domain.request.LoginRequest;
 import com.sarvika.productmanagement.service.AuthService;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody @Valid LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody @Valid LoginRequest loginRequest) {
         return ResponseEntity.ok(authService.loginUser(loginRequest));
     }
 }

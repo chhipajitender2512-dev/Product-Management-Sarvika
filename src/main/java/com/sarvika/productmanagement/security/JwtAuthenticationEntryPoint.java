@@ -26,6 +26,6 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
             "error": "Unauthorized",
             "message": "%s"
         }
-        """.formatted(LocalDateTime.now(), ex.getMessage()));
+        """.formatted(LocalDateTime.now(), "Invalid Token!"));
     }
 }

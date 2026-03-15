@@ -1,5 +1,6 @@
 package com.sarvika.productmanagement.service.impl;
 
+import com.sarvika.productmanagement.domain.reponse.LoginResponse;
 import com.sarvika.productmanagement.domain.request.LoginRequest;
 import com.sarvika.productmanagement.entity.User;
 import com.sarvika.productmanagement.exception.InvalidCredentialException;
@@ -19,13 +20,15 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtUtil;
 
     @Override
-    public String loginUser(LoginRequest request) {
+    public LoginResponse loginUser(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new UserNotFoundException("User Not Found!"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new InvalidCredentialException("Invalid Credentials");
         }
-        return jwtUtil.generateToken(user.getUsername());
+        return LoginResponse.builder()
+                .accessToken(jwtUtil.generateToken(user.getUsername()))
+                .build();
     }
 }
